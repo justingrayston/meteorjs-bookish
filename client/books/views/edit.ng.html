@@ -1,0 +1,21 @@
+<form name="createBook" layout="columm">
+  <md-input-container>
+    <label>Title</label>
+    <input type="text" ng-model="book.title" required/>
+  </md-input-container>
+  <md-input-container>
+    <label>Author</label>
+    <input type="text" ng-model="book.author" required/>
+  </md-input-container>
+  <md-input-container>
+    <label>Synopsis</label>
+    <textarea ng-model="book.synopsis"></textarea>
+  </md-input-container>
+  <div class="button-wrapper" layout="row">
+    <md-button ng-if="book._id" class="md-raised md-primary"
+      ng-disabled="createBook.$invalid" ng-click="saveBook()">Update</md-button>
+    <md-button ng-if="!book._id" class="md-raised md-primary"
+      ng-disabled="createBook.$invalid" ng-click="saveBook()">Create</md-button>
+    <md-button ui-sref="mybooks" class="md-raised md-warn">Cancel</md-button>
+  </div>
+</form>

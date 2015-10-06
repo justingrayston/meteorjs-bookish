@@ -1,0 +1,14 @@
+<h1 class="md-title">The People's Library</h1>
+<md-list flex>
+  <md-list-item class="md-2-line" ng-repeat="book in books" ng-if="books.length" flex>
+    <div class="md-list-item-text">
+      <h3>{{book.title}}</h3>
+      <p>{{book.author}}</p>
+    </div>
+  </md-list-item>
+  <md-list-item ng-if="!books.length">
+    <div class="md-list-item-text">
+      <p>The books are lost, no one has submitted a book yet!</p>
+    </div>
+  </md-list-item>
+</md-list>

@@ -1,0 +1,30 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>People's Book Library</title>
+<base href="/"/>
+</head>
+<body>
+  <md-toolbar md-scroll-shrink>
+    <div class="md-toolbar-tools" layout="row" flex>
+      <h3 hide show-gt-md>
+        <span>The Peoples Book List</span>
+      </h3>
+      <md-button ui-sref="home" ng-if="$root.currentUser">
+        All
+      </md-button>
+      <md-button ui-sref="mybooks" ng-if="$root.currentUser">
+        Yours
+      </md-button>
+      <span flex></span>
+      <blaze-template name="loginButtons"></blaze-template>
+    </div>
+  </md-toolbar>
+  
+  
+  <md-content flex flex-lg="80" ui-view layout-padding layout="column"
+    layout-align="center start">
+  </md-content>
+  <md-button ng-if="$root.currentUser" class="md-icon-button md-primary md-fab add-button" aria-label="add book" ui-sref="create">
+    <md-icon md-svg-src="ic_add"></md-icon>
+  </md-button>
+</body>
