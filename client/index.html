@@ -3,18 +3,29 @@
 <title>People's Book Library</title>
 <base href="/"/>
 </head>
-<body ng-class="{'sml': $root.smallScreen}">
+<body ng-class="{'sml': $root.smallScreen, 'user': $root.currentUser}">
   <md-toolbar md-scroll-shrink>
     <div class="md-toolbar-tools" layout="row" flex>
       <h3 hide show-gt-md>
         <span>The Peoples Book List</span>
       </h3>
-      <md-button ui-sref="home" ng-if="$root.currentUser">
-        All
-      </md-button>
-      <md-button ui-sref="mybooks" ng-if="$root.currentUser">
-        Yours
-      </md-button>
+      <div class="user-nav" ng-if="$root.currentUser" layout="row">
+        <md-button show-gt-md hide ui-sref="home" aria-label="Navigate to home">
+          All
+        </md-button>
+        <md-button show-gt-md hide ui-sref="mybooks" aria-label="Navigate to your Library">
+          Yours
+        </md-button>
+        <md-button show-sm show-md hide ui-sref="home" class="md-icon-button" aria-label="Navigate to home">
+          <md-icon md-svg-src="ic_public"></md-icon>
+        </md-button>
+        <md-button show-sm show-md hide ui-sref="mybooks"  class="md-icon-button" aria-label="Navigate to your Library">
+          <md-icon md-svg-src="ic_person"></md-icon>
+        </md-button>
+
+      </div>
+
+
       <span flex></span>
       <blaze-template name="loginButtons"></blaze-template>
     </div>
