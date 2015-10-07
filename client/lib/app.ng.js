@@ -23,8 +23,7 @@ function AppRun($rootScope, $state, $mdMedia) {
 
   // meteor start up
   $rootScope.meteorConnected = false;
-  function meteorStart(a) {
-    console.log('meteor connected', a);
+  function meteorStart() {
     var connectionWatcher = $rootScope.$watch(Meteor.status, function(nv, ov){
       if (nv.connected) {
         $rootScope.meteorConnected = true;
