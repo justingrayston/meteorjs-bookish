@@ -23,3 +23,17 @@
     text-overflow: ellipsis;
   }
 }
+
+/* ui-view animation */
+
+[ui-view] {
+  position: absolute;
+  top: 64px;
+  transition: all 1000ms ease-in-out;
+  &.ng-enter, &.ng-leave {
+    opacity: 0;
+  }
+  &.ng-enter-active {
+    opacity: 1;
+  }
+}
