@@ -1,2 +1,6 @@
-  <ui-view>
+  <div ng-if="!$root.meteorConnected" class="loader-wrapper" flex layout="column" layout-align="center center">
+    <p class="md-body-1">Connecting...</p>
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+  <ui-view ng-if="$root.meteorConnected">
   </ui-view>

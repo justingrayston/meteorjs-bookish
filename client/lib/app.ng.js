@@ -1,11 +1,11 @@
 angular.module('bookish', [
   'angular-meteor',
   'ngMaterial',
-  'ui.router',
+  'ui.router'
 ]);
 
 
-function AppRun($rootScope, $state) {
+function AppRun($rootScope, $state, $meteor) {
   $rootScope.$on('$stateChangeError',
     function(event, toState, toParams, fromState, fromParams, error){
       if (error === 'AUTH_REQUIRED') {
@@ -20,9 +20,22 @@ function AppRun($rootScope, $state) {
       $state.go('home');
     }
   });
+  $rootScope.meteorConnected = false;
+  function meteorStart(a) {
+    console.log('meteor connected', a);
+    var connectionWatcher = $rootScope.$watch(Meteor.status, function(nv, ov){
+      if (nv.connected) {
+        $rootScope.meteorConnected = true;
+        // Release the watch, we don't need to detect reconnects at this
+        // stage.
+        connectionWatcher();
+      }
+    });
+  }
+  Meteor.startup(meteorStart);
 }
 
-AppRun.$inject = ['$rootScope', '$state'];
+AppRun.$inject = ['$rootScope', '$state', '$meteor'];
 
 angular.module('bookish').run(AppRun);
 
