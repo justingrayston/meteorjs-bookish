@@ -5,7 +5,7 @@ angular.module('bookish', [
 ]);
 
 
-function AppRun($rootScope, $state, $meteor) {
+function AppRun($rootScope, $state, $mdMedia) {
   $rootScope.$on('$stateChangeError',
     function(event, toState, toParams, fromState, fromParams, error){
       if (error === 'AUTH_REQUIRED') {
@@ -20,6 +20,8 @@ function AppRun($rootScope, $state, $meteor) {
       $state.go('home');
     }
   });
+
+  // meteor start up
   $rootScope.meteorConnected = false;
   function meteorStart(a) {
     console.log('meteor connected', a);
@@ -33,9 +35,20 @@ function AppRun($rootScope, $state, $meteor) {
     });
   }
   Meteor.startup(meteorStart);
+
+  // set size class on small screens
+  $rootScope.smallScreen = false;
+  $rootScope.$watch(
+    function() {
+      return $mdMedia('sm');
+    },
+    function(nv) {
+      $rootScope.smallScreen = nv;
+    }
+  )
 }
 
-AppRun.$inject = ['$rootScope', '$state', '$meteor'];
+AppRun.$inject = ['$rootScope', '$state', '$mdMedia'];
 
 angular.module('bookish').run(AppRun);
 
