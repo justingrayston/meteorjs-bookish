@@ -3,8 +3,8 @@
 <title>People's Book Library</title>
 <base href="/"/>
 </head>
-<body ng-class="{'sml': $root.smallScreen, 'user': $root.currentUser}">
-  <md-toolbar md-scroll-shrink>
+<body ng-class="{'sml': $root.smallScreen, 'user': $root.currentUser}" class="flex md-layout-column">
+  <md-toolbar>
     <div class="md-toolbar-tools" layout="row" flex>
       <h3 hide show-gt-md>
         <span>The Peoples Book List</span>
@@ -32,8 +32,9 @@
   </md-toolbar>
   
   
-  <md-content flex flex-lg="80" ui-view layout-padding layout="column"
-    layout-align="center start">
+  <md-content flex flex-lg="80" layout-padding layout="column"
+    layout-align="start start" md-scroll-y>
+    <ui-view></ui-view>
   </md-content>
   <md-button ng-if="$root.currentUser" class="md-icon-button md-primary md-fab add-button" aria-label="add book" ui-sref="create">
     <md-icon md-svg-src="ic_add"></md-icon>
