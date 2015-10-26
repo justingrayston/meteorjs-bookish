@@ -34,17 +34,10 @@ function EditBookCtrl($rootScope, $scope, $state, $stateParams) {
   }
 
   $scope.saveBook = function() {
-    var toSave = {};
 
-    if ($scope.book._id) {
-      toSave._id = $scope.book._id;
-    }
-    toSave.owner = $rootScope.currentUser._id;
-    toSave.title = $scope.book.title;
-    toSave.synopsis = $scope.book.synopsis || null;
-    toSave.author = $scope.book.author;
+    $scope.book.owner = $rootScope.currentUser._id;
 
-    books.save(toSave).then(saveSuccess, saveError);
+    books.save($scope.book).then(saveSuccess, saveError);
   };
 }
 
