@@ -46,15 +46,22 @@ function EditBookCtrl($rootScope, $scope, $state, $stateParams, $reactive) {
 
   $scope.saveBook = function() {
 
-    $scope.book.owner = $rootScope.currentUser._id;
-    console.log($scope.book);
-    var toSave = angular.copy($scope.book);
-    delete toSave._id;
-    Books.update($scope.book._id, {$set: toSave}, function(err){
+    function callback(err){
       if (!err) {
         $state.go('mybooks');
       }
-    });
+    };
+
+    $scope.book.owner = $rootScope.currentUser._id;
+    if (!$scope.book._id) {
+      Books.insert($scope.book, callback);
+    } else {
+      var toSave = angular.copy($scope.book);
+      delete toSave._id;
+      Books.update($scope.book._id, {$set: toSave},  callback);    
+    }
+
+
     //$scope.book.update($scope.book).then(saveSuccess, saveError);
   };
 }
