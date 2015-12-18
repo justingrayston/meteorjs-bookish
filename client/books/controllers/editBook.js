@@ -20,10 +20,21 @@
  *     at angular-meteor-utils.js:38(anonymous function) @ angular.js:12477ident.$get @ angular.js:9246parent.$get.Scope.$apply @ angular.js:16094(anonymous function) @ angular.js:23554jQuery.event.dispatch @ jquery.js:4665jQuery.event.add.elemData.handle @ jquery.js:4333
  */
 
-function EditBookCtrl($rootScope, $scope, $state, $stateParams) {
-  var books = $scope.$meteorCollection(Books, false).subscribe('myBooks')
-  $scope.book = $stateParams.bookId ? $scope.$meteorObject(
-                                      Books, $stateParams.bookId, false) : {};
+function EditBookCtrl($rootScope, $scope, $state, $stateParams, $reactive) {
+  $reactive(this).attach($scope);
+  
+  // var books = this.helpers({
+
+  // });
+  // $scope.book = $stateParams.bookId ? $scope.$meteorObject(
+  //                                     Books, $stateParams.bookId, false) : {};
+  $scope.helpers({
+    book: function() {
+      return Books.findOne($stateParams.bookId);
+    }
+  });
+
+  $scope.subscribe('myBooks');
 
   function saveSuccess() {
     $state.go('mybooks');
@@ -36,11 +47,18 @@ function EditBookCtrl($rootScope, $scope, $state, $stateParams) {
   $scope.saveBook = function() {
 
     $scope.book.owner = $rootScope.currentUser._id;
-
-    books.save($scope.book).then(saveSuccess, saveError);
+    console.log($scope.book);
+    var toSave = angular.copy($scope.book);
+    delete toSave._id;
+    Books.update($scope.book._id, {$set: toSave}, function(err){
+      if (!err) {
+        $state.go('mybooks');
+      }
+    });
+    //$scope.book.update($scope.book).then(saveSuccess, saveError);
   };
 }
 
-EditBookCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams'];
+EditBookCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', '$reactive'];
 
 angular.module('bookish').controller('EditBookCtrl', EditBookCtrl);
